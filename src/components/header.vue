@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">个人博客123456</div>
+  <div class="hello">个人博客1234567</div>
 </template>
 
 <script>
@@ -14,7 +14,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .hello {
-  color: $primary-lt-blue;
+  color: $neutral-cool-grey;
   font-size: $title-size;
+  background-color: red;
 }
 </style>
