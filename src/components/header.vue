@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">121233</div>
+  <div class="hello">个人博客123456</div>
 </template>
 
 <script>
@@ -13,18 +13,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.hello {
+  color: $primary-lt-blue;
+  font-size: $title-size;
 }
 </style>
