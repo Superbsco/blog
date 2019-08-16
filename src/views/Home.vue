@@ -24,18 +24,19 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import { Component, Vue } from 'vue-property-decorator';
+import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 
 @Component({
   components: {
-    HelloWorld
-  }
+    HelloWorld,
+  },
 })
 export default class Home extends Vue {}
 </script>
 
 <style lang="scss" scoped>
+
 .fullpage-wrapper {
   width: 80px;
   height: 80px;
@@ -53,6 +54,7 @@ export default class Home extends Vue {}
     background-color: #384c50;
     border: 1px solid rgb(18, 20, 20);
     box-shadow: 0px 0px 32px 8px rgb(18, 20, 20), 0px 0px 4px 1px rgb(18, 20, 20) inset;
+
     .reactor-container-inner {
       height: 42px;
       width: 42px;
@@ -63,6 +65,7 @@ export default class Home extends Vue {}
     .circle {
       border-radius: 50%;
     }
+
     .abs-center {
       position: absolute;
       top: 0;
@@ -71,6 +74,7 @@ export default class Home extends Vue {}
       left: 0;
       margin: auto;
     }
+
     .core-inner {
       width: 12px;
       height: 12px;
@@ -78,6 +82,7 @@ export default class Home extends Vue {}
       background-color: #ffffff;
       box-shadow: 0px 0px 7px 5px #52fefe, 0px 0px 10px 10px #52fefe inset;
     }
+
     .core-outer {
       width: 20px;
       height: 20px;
@@ -85,12 +90,14 @@ export default class Home extends Vue {}
       background-color: #ffffff;
       box-shadow: 0px 0px 2px 1px #52fefe, 0px 0px 10px 5px #52fefe inset;
     }
+
     .core-wrapper {
       width: 40px;
       height: 40px;
       background-color: #073c4b;
       box-shadow: 0px 0px 5px 4px #52fefe, 0px 0px 6px 2px #52fefe inset;
     }
+
     .tunnel {
       width: 40px;
       height: 40px;
@@ -118,31 +125,41 @@ export default class Home extends Vue {}
       .coil-1 {
         transform: rotate(0deg);
       }
+
       .coil-2 {
         transform: rotate(45deg);
       }
+
       .coil-3 {
         transform: rotate(90deg);
       }
+
       .coil-4 {
         transform: rotate(135deg);
       }
+
       .coil-5 {
         transform: rotate(180deg);
       }
+
       .coil-6 {
         transform: rotate(225deg);
       }
+
       .coil-7 {
         transform: rotate(270deg);
       }
+
       .coil-8 {
         transform: rotate(315deg);
       }
+
       @keyframes reactor-anim {
+
         from {
           transform: rotate(0deg);
         }
+
         to {
           transform: rotate(360deg);
         }
