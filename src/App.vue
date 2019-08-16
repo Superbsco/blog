@@ -20,6 +20,7 @@
 #nav {
   padding: 30px;
   background: $theme-bg;
+  color: #abc;
   a {
     font-weight: bold;
     // color: #2c3e50;
