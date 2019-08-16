@@ -21,6 +21,16 @@ export default class Home extends Vue {}
 </script>
 
 <style lang="scss" scoped>
+@font-face {
+  font-family: 'iconfont';  /* project id 1355762 */
+  src: url('//at.alicdn.com/t/font_1355762_03gdlwek6z3b.eot');
+  src: url('//at.alicdn.com/t/font_1355762_03gdlwek6z3b.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1355762_03gdlwek6z3b.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1355762_03gdlwek6z3b.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1355762_03gdlwek6z3b.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1355762_03gdlwek6z3b.svg#iconfont') format('svg');
+}
+
 @keyframes move {
   0% {
     background-position: 0 0;
