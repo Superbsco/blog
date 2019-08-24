@@ -1,5 +1,75 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div class="blog">
+    <blog-slide :isShow="isShow"></blog-slide>
+    <div class="main">
+      <blog-header @isOpenDrawer="isOpenDrawer()"></blog-header>
+      <h1 @click="isOpenDrawer()">This is an about page123</h1>
+    </div>
   </div>
 </template>
+
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import BlogHeader from './Blog/components/BlogHeader.vue'; // @ is an alias to /src
+import BlogSlide from './Blog/components/BlogSlide.vue';
+
+@Component({
+  components: {
+    BlogHeader,
+    BlogSlide,
+  },
+})
+
+export default class Blog extends Vue {
+  private isShow! : boolean;
+
+  private data() {
+    return {
+      isShow: true,
+    };
+  }
+
+  private isOpenDrawer() {
+    this.isShow = !this.isShow;
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.blog {
+  display: flex;
+
+  .slide-enter-active {
+    width: 300px;
+    transition: all .2s ease;
+  }
+
+  .slide-leave-active {
+    width: 300px;
+    transition: all .2s ease;
+  }
+
+  .slide-enter, .slide-leave-to {
+    width: 256px;
+    margin-left: -260px;
+  }
+
+  .drawer {
+    width: 300px;
+    height: 100vh;
+    background-color: $background-color;
+    border-left: 1px solid $border-color;
+    border-right: 1px solid $border-color;
+    box-shadow: $box-shadow;
+    overflow: auto;
+  }
+
+  .main {
+    flex: 1;
+  }
+
+  .show {
+    margin-left: 0;
+  }
+}
+</style>

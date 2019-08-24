@@ -1,20 +1,20 @@
 <template>
   <div class="home">
+    <Header></Header>
     <div class="bg"></div>
     <div class="mask"></div>
     <svg-icon iconClass="super" class="logo"></svg-icon>
     <h1 class="slogan">The Future Of Possible</h1>
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import Header from '@/components/header/Header.vue'; // @ is an alias to /src
 
 @Component({
   components: {
-    HelloWorld,
+    Header,
   },
 })
 export default class Home extends Vue {}
@@ -22,13 +22,15 @@ export default class Home extends Vue {}
 
 <style lang="scss" scoped>
 @font-face {
-  font-family: 'iconfont';  /* project id 1355762 */
-  src: url('//at.alicdn.com/t/font_1355762_03gdlwek6z3b.eot');
-  src: url('//at.alicdn.com/t/font_1355762_03gdlwek6z3b.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1355762_03gdlwek6z3b.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1355762_03gdlwek6z3b.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1355762_03gdlwek6z3b.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1355762_03gdlwek6z3b.svg#iconfont') format('svg');
+  font-family: "iconfont"; /* project id 1355762 */
+  src: url("//at.alicdn.com/t/font_1355762_03gdlwek6z3b.eot");
+  src: url("//at.alicdn.com/t/font_1355762_03gdlwek6z3b.eot?#iefix")
+      format("embedded-opentype"),
+    url("//at.alicdn.com/t/font_1355762_03gdlwek6z3b.woff2") format("woff2"),
+    url("//at.alicdn.com/t/font_1355762_03gdlwek6z3b.woff") format("woff"),
+    url("//at.alicdn.com/t/font_1355762_03gdlwek6z3b.ttf") format("truetype"),
+    url("//at.alicdn.com/t/font_1355762_03gdlwek6z3b.svg#iconfont")
+      format("svg");
 }
 
 @keyframes move {
