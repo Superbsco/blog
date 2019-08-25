@@ -12,7 +12,7 @@ import { Component, Vue, Emit } from 'vue-property-decorator';
 @Component({})
 export default class BlogHeader extends Vue {
   @Emit('isOpenDrawer')
-  private isOpenDrawer():any {}
+  private isOpenDrawer():any { console.log(this); }
 }
 </script>
 
