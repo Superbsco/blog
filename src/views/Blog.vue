@@ -21,13 +21,11 @@ import BlogSlide from './Blog/components/BlogSlide.vue';
 })
 
 export default class Blog extends Vue {
-  private isShow! : boolean;
+  private isShow : boolean = true;
 
-  private data() {
-    return {
-      isShow: true,
-    };
-  }
+  // private data() {
+  //   return {};
+  // }
 
   private isOpenDrawer() {
     this.isShow = !this.isShow;
