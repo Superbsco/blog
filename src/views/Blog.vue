@@ -3,7 +3,7 @@
     <blog-slide :isShow="isShow"></blog-slide>
     <div class="main">
       <blog-header @isOpenDrawer="isOpenDrawer()"></blog-header>
-      <h1 @click="isOpenDrawer()">This is an about page123</h1>
+      <router-view></router-view>
     </div>
   </div>
 </template>
