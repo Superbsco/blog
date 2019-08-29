@@ -3,6 +3,10 @@
     <div class="drawer-pull" @click="isOpenDrawer()">
       <svg-icon iconClass="pull-left" class="icon-pull"></svg-icon>
     </div>
+    <p>{{$store.state.headTitle}}</p>
+    <div class="share" @click="shareTo()">
+      <svg-icon iconClass="share" class="icon-share"></svg-icon>
+    </div>
   </div>
 </template>
 
@@ -12,26 +16,28 @@ import { Component, Vue, Emit } from 'vue-property-decorator';
 @Component({})
 export default class BlogHeader extends Vue {
   @Emit('isOpenDrawer')
+
   private isOpenDrawer():any { console.log(this); }
+
+  private shareTo():void { console.log(this); }
 }
 </script>
 
 <style lang="scss" scoped>
   .blog-header {
-    height: 30px;
+    padding: 25px 17px;
     display: flex;
-    align-items: center;
-    padding: 17px;
+    justify-content: space-between;
 
-    .drawer-pull {
-      .icon-pull {
-        color: $sub-color;
+  .icon-pull,
+  .icon-share {
+    color: $sub-color;
+    font-size: 22px;
 
-        &:hover,
-        &:active {
-          color: $hover-color;
-        }
-      }
+    &:hover,
+    &:active {
+      color: $hover-color;
     }
   }
+}
 </style>

@@ -7,23 +7,29 @@
           <p>{{title}}</p>
         </div>
         <div class="search-container">
-          <input id="search" type="search" autocomplete="off" :placeholder="placeholder"/>
+          <input id="search" type="search" v-model="searchContent" @keyup="keyUpEvent()"
+          autocomplete="off" :placeholder="placeholder"/>
           <label for="search">{{placeholder}}</label>
           <div class="bottom-line"></div>
+          <div :class="searchContentFlag ? 'hideSearch' : 'showSearch'">
+            <svg-icon iconClass="search" class="search"></svg-icon>
+          </div>
         </div>
         <div class="menu">
-          <!-- <div class="home">
-            <router-link to="/">{{mainPage}}</router-link>
-          </div> -->
           <div class="detail">
             <div class="detail-content" v-for="(o,index) in detailMenu" :key="index">
               <div class="detail-title" @click="isOpen(index)">
                 <svg-icon :iconClass="o.icon" class="icon"></svg-icon>
-                <span>{{o.title}}</span>
+                <span class="title-and-icon">{{o.title}}</span>
+                <svg-icon iconClass="down" class="icon change"
+                :class="o.isOpen ? '' : 'turn-left'"></svg-icon>
               </div>
               <transition-group name="show" tag="div" class="detail-title-small">
-                <div v-for="(d, i) in o.detail" :key="i" v-if="o.isOpen">
-                  <router-link :to="d.path">{{(index+1) + '.' + (i+1) + '、' + d.name}}</router-link>
+                <div v-for="(d,j) in o.detail" :key="d.id"
+                  @click="clickActive(index, j, d.name)" v-show="o.isOpen">
+                  <router-link :to="d.path" :class="d.active ? 'active' : ''">
+                    {{d.id + '、' + d.name}}
+                  </router-link>
                 </div>
               </transition-group>
             </div>
@@ -45,25 +51,46 @@ export default class About extends Vue {
 
   private placeholder : String = '输入并搜索';
 
-  private mainPage : String = '返回主页';
+  private searchContent : any;
+
+  private searchContentFlag : Boolean = false;
 
   private detailMenu = [
+    {
+      title: '前言',
+      icon: 'before',
+      isOpen: true,
+      detail: [
+        {
+          id: '1',
+          name: '前言',
+          path: '/blog',
+          active: true,
+        },
+      ],
+    },
     {
       title: '前端知识总结',
       icon: 'frontend',
       isOpen: true,
       detail: [
         {
+          id: '1',
           name: 'css实用样式',
           path: '/blog/css',
+          active: false,
         },
         {
+          id: '2',
           name: 'JS Demo',
           path: '/blog/js',
+          active: false,
         },
         {
+          id: '3',
           name: 'Vue Demo',
           path: '/blog/vue',
+          active: false,
         },
       ],
     },
@@ -74,12 +101,16 @@ export default class About extends Vue {
       isOpen: true,
       detail: [
         {
+          id: '1',
           name: 'python',
           path: '/blog/python',
+          active: false,
         },
         {
+          id: '2',
           name: 'nodeJS',
           path: '/blog/nodejs',
+          active: false,
         },
       ],
     },
@@ -90,12 +121,16 @@ export default class About extends Vue {
       isOpen: true,
       detail: [
         {
+          id: '1',
           name: 'git',
           path: '/blog/git',
+          active: false,
         },
         {
+          id: '2',
           name: '软件推荐',
           path: '/blog/recommend',
+          active: false,
         },
       ],
     },
@@ -106,12 +141,16 @@ export default class About extends Vue {
       isOpen: true,
       detail: [
         {
+          id: '1',
           name: '工作问题',
           path: '/blog/workproblem',
+          active: false,
         },
         {
+          id: '2',
           name: '架构总结',
           path: '/blog/summary',
+          active: false,
         },
       ],
     },
@@ -122,8 +161,10 @@ export default class About extends Vue {
       isOpen: true,
       detail: [
         {
+          id: '1',
           name: '大城小事',
           path: '/blog/thinking',
+          active: false,
         },
       ],
     },
@@ -133,8 +174,30 @@ export default class About extends Vue {
     this.detailMenu[i].isOpen = !this.detailMenu[i].isOpen;
   }
 
+  private clickActive(i : number, j : number, name : string):void {
+    this.$store.commit('setHeadTitle', name);
+    this.detailMenu.forEach((e, k) => {
+      e.detail.forEach((o, l) => {
+        o.active = (i === k && j === l); // eslint-disable-line no-param-reassign
+      });
+    });
+  }
+
+  private data() {
+    return {
+      searchContent: '',
+    };
+  }
+
   private toIndex():void {
     this.$router.replace('/');
+  }
+
+  private keyUpEvent() {
+    this.searchContentFlag = true;
+    if (this.searchContent.length === 0) {
+      this.searchContentFlag = false;
+    }
   }
 }
 </script>
@@ -144,23 +207,23 @@ export default class About extends Vue {
   display: flex;
 
   .slide-enter-active {
-    width: 300px;
+    width: $slide-left-width;
     transition: all .2s ease;
   }
 
   .slide-leave-active {
-    width: 300px;
+    width: $slide-left-width;
     transition: all .2s ease;
-    margin-left: -300px;
+    margin-left: -$slide-left-width;
   }
 
   .slide-enter, .slide-leave-to {
-    width: 300px;
-    margin-left: -300px;
+    width: $slide-left-width;
+    margin-left: -$slide-left-width;
   }
 
   .drawer {
-    width: 300px;
+    width: $slide-left-width;
     height: 100vh;
     background-color: $background-color;
     border-left: 1px solid $border-color;
@@ -201,95 +264,106 @@ export default class About extends Vue {
       -ms-flex-align: start;
       align-items: flex-start;
       margin: 10px auto;
-    }
 
-    .search-container input {
-      -webkit-box-ordinal-group: 11;
-      -ms-flex-order: 10;
-      order: 10;
-      outline: none;
-      border: none;
-      width: 100%;
-      padding: 10px 15px;
-      font-size: 14px;
-      border-bottom: 1px solid $border-bottom-color;
-      // text-indent: 15px;
-      position: relative;
-    }
+      input {
+        -webkit-box-ordinal-group: 11;
+        -ms-flex-order: 10;
+        order: 10;
+        outline: none;
+        border: none;
+        width: 100%;
+        padding: 10px 15px;
+        font-size: 14px;
+        border-bottom: 1px solid $border-bottom-color;
+        // text-indent: 15px;
+        position: relative;
+      }
 
-    input[type=search]::-webkit-search-cancel-button {
-      -webkit-appearance: none;
-      height: 18px;
-      width: 18px;
-      border-radius: 50%;
-      background-color: $focus-border-color;
-      background-image: url('../../../assets/close.png');
-      background-size: 12px 12px;
-      background-repeat: no-repeat;
-      background-position-x: 3px;
-      background-position-y: 3px;
-      margin-left: 15px;
-      cursor: pointer;
-    }
+      input[type=search]::-webkit-search-cancel-button {
+        -webkit-appearance: none;
+        height: 18px;
+        width: 18px;
+        border-radius: 50%;
+        background-color: $focus-border-color;
+        background-image: url('../../../assets/close.png');
+        background-size: 12px 12px;
+        background-repeat: no-repeat;
+        background-position-x: 3px;
+        background-position-y: 3px;
+        margin-left: 15px;
+        cursor: pointer;
+      }
 
-    .search-container input::-moz-placeholder {
-      opacity: 0;
-    }
+      input:-ms-input-placeholder {
+        opacity: 0;
+      }
 
-    .search-container input::-webkit-input-placeholder {
-      opacity: 0;
-    }
+      input::-webkit-input-placeholder{
+         opacity: 0;
+      }
 
-    .search-container input:-ms-input-placeholder {
-      opacity: 0;
-    }
+      input::-moz-placeholder {
+        opacity: 0;
+      }
 
-    .search-container input, .search-container label {
-      transition: all $transform-time;
-    }
+      input,
+      label {
+        transition: all $transform-time;
+      }
 
-    .search-container label {
-      -webkit-box-ordinal-group: 101;
-      -ms-flex-order: 100;
-      order: 100;
-      font-size: 14px;
-      color: $label-font-color;
-      -webkit-transform-origin: left bottom;
-      transform-origin: left bottom;
-      -webkit-transform: translate(15px, 25px);
-      transform: translate(15px, 25px);
-    }
+      label {
+        -webkit-box-ordinal-group: 101;
+        -ms-flex-order: 100;
+        order: 100;
+        font-size: 14px;
+        color: $label-font-color;
+        -webkit-transform-origin: left bottom;
+        transform-origin: left bottom;
+        -webkit-transform: translate(15px, 25px);
+        transform: translate(15px, 25px);
+      }
 
-    .search-container .bottom-line {
-      order: 2;
-      width: 0;
-      height: 2px;
-      background: $focus-border-color;
-      transition: all $transform-time;
-    }
+      .bottom-line {
+        order: 2;
+        width: 0;
+        height: 2px;
+        background: $focus-border-color;
+        transition: all $transform-time;
+      }
 
-    .search-container input:focus {
-      border-bottom-color: #fff;
-    }
+      input:focus {
+        border-bottom-color: #fff;
+      }
 
-    .search-container input:focus ~ div, .search-container input:not(:placeholder-shown) ~ div {
-      width: 100%;
-    }
+      input:focus ~ div,
+      input:not(:placeholder-shown) ~ div {
+        width: 100%;
+      }
 
-    .search-container input:focus + label, .search-container input:not(:placeholder-shown) + label {
-      color: $label-focus-font-color;
-      -webkit-transform: translate(15px) scale($scale);
-      transform: translate(15px) scale($scale);
+      input:focus + label,
+      input:not(:placeholder-shown) + label {
+        color: $label-focus-font-color;
+        -webkit-transform: translate(15px) scale($scale);
+        transform: translate(15px) scale($scale);
+      }
+
+      .search {
+        font-size: 18px;
+        position: absolute;
+        right: 15px;
+        bottom: 11px;
+      }
+
+      .hideSearch {
+        display: none;
+      }
+
+      .showSearch {
+        display: block;
+      }
     }
 
     .menu {
-      .home {
-        height: 40px;
-        line-height: 40px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid $border-bottom-color;
-      }
-
       .detail {
         text-align: left;
         font-size: 14px;
@@ -300,15 +374,27 @@ export default class About extends Vue {
             color: $meun-title-color;
             display: flex;
             align-items: center;
+            cursor: pointer;
 
             .icon {
               font-size: 16px;
               margin-right: 5px;
             }
-          }
 
-          .open {
-            height: 0;
+            .change {
+              margin-left: 5px;
+              -webkit-transform: rotate(0deg);
+              transform: rotate(0deg);
+              -webkit-transition: -webkit-transform .1s linear;
+              transition: transform .1s linear;
+            }
+
+            .turn-left {
+              -webkit-transform: rotate(90deg);
+              transform: rotate(90deg);
+              -webkit-transition: -webkit-transform .1s linear;
+              transition: transform .1s linear;
+            }
           }
 
           .detail-title-small {
@@ -318,6 +404,10 @@ export default class About extends Vue {
               a {
                 text-decoration: none;
                 color: $meun-title-detail-color;
+              }
+
+              .active {
+                color: $focus-border-color;
               }
 
               a:hover,
